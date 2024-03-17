@@ -10,6 +10,7 @@ import React, {
 import PropTypes from 'prop-types';
 import produce from 'immer';
 import { ThemeContext, ThemeProvider } from 'styled-components';
+import { acrossLiteFormatter } from './acrossLiteFormatter';
 import { CrosswordContext, CrosswordContextType } from './context';
 import {
   AnswerTuple,
@@ -24,6 +25,7 @@ import {
   UsedCellData,
   CellData,
   UnusedCellData,
+  CluesInputOriginal,
 } from './types';
 import {
   bothDirections,
@@ -118,7 +120,10 @@ export const crosswordProviderPropTypes = {
 export type CrosswordProviderProps = EnhancedProps<
   typeof crosswordProviderPropTypes,
   {
-    data: CluesInput; // Clue/answer data
+    data?: CluesInput; // Clue/answer data
+    solution?: string; // acrossLiteFormatter solution string
+    acrossClues?: string; // acrossLiteFormatter acrossClues string
+    downClues?: string; // acrossLiteFormatter downClues string
     /**
      * callback function that fires when a player completes an answer, whether
      * correct or not; called with `(direction, number, correct, answer)`
@@ -198,7 +203,7 @@ const defaultTheme: CrosswordProviderProps['theme'] = {
   cellBackground: 'rgb(255,255,255)',
   cellBorder: 'rgb(0,0,0)',
   textColor: 'rgb(0,0,0)',
-  numberColor: 'rgba(0,0,0, 0.25)',
+  numberColor: 'rgba(0,0,0,0.25)',
   focusBackground: 'rgb(255,255,0)',
   highlightBackground: 'rgb(255,255,204)',
 };
@@ -216,6 +221,9 @@ const CrosswordProvider = React.forwardRef<
   (
     {
       data,
+      solution,
+      acrossClues,
+      downClues,
       theme,
       onAnswerComplete,
       onAnswerCorrect,
@@ -230,6 +238,18 @@ const CrosswordProvider = React.forwardRef<
     },
     ref
   ) => {
+    // If solution, acrossClues, and downClues are present, use them to create the data
+    const finalData = useMemo(() => {
+      if (solution && acrossClues && downClues) {
+        return acrossLiteFormatter(solution, acrossClues, downClues);
+      }
+      return data;
+    }, [data, solution, acrossClues, downClues]);
+
+    if (!finalData) {
+      throw new Error('finalData cannot be undefined');
+    }
+
     const contextTheme =
       useContext<CrosswordProviderProps['theme']>(ThemeContext);
 
@@ -253,8 +273,8 @@ const CrosswordProvider = React.forwardRef<
       gridData: masterGridData,
       clues: masterClues,
     } = useMemo(
-      () => createGridData(data, finalTheme.allowNonSquare ?? false),
-      [data, finalTheme.allowNonSquare]
+      () => createGridData(finalData, finalTheme.allowNonSquare ?? false),
+      [finalData, finalTheme.allowNonSquare]
     );
 
     const [gridData, setGridData] = useState<GridData>([]);
@@ -355,7 +375,7 @@ const CrosswordProvider = React.forwardRef<
             return;
           }
 
-          const info = data[direction][number];
+          const info = finalData[direction][number];
 
           // We send correct/incorrect messages, but *only* if every cell in the
           // answer is filled out; there's no point in reporting "incorrect" when the answer is simply incomplete.
@@ -573,7 +593,7 @@ const CrosswordProvider = React.forwardRef<
           case 'Home':
           case 'End': {
             // move to beginning/end of this entry?
-            const info = data[currentDirection][currentNumber];
+            const info = finalData[currentDirection][currentNumber];
             const {
               answer: { length },
             } = info;
