@@ -1,24 +1,12 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
 import { CrosswordContext } from './context';
 import type { Direction, EnhancedProps } from './types';
-
 import Clue from './Clue';
 
-// interface ClueInfo {
-//   number: string;
-//   clue: string;
-//   correct?: boolean;
-// }
-
 const directionCluesPropTypes = {
-  /** direction of this list of clues ("across" or "down") */
-  direction: PropTypes.string.isRequired,
-
-  /** a label to use instead of the (English) default */
-  label: PropTypes.string,
+  direction: PropTypes.string.isRequired, // Direction of this list of clues ("across" or "down")
+  label: PropTypes.string, // A label to use instead of the (English) default
 };
 
 export type DirectionCluesProps = EnhancedProps<

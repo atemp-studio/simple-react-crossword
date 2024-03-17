@@ -6,7 +6,7 @@ import { CrosswordSizeContext } from './context';
 import type { UsedCellData, EnhancedProps } from './types';
 
 const cellPropTypes = {
-  /** the data specific to this cell */
+  // The data specific to this cell
   cellData: PropTypes.shape({
     row: PropTypes.number.isRequired,
     col: PropTypes.number.isRequired,
@@ -14,34 +14,24 @@ const cellPropTypes = {
     number: PropTypes.string,
     answer: PropTypes.string,
   }).isRequired,
-
-  /** whether this cell has focus */
-  focus: PropTypes.bool,
-
-  /** whether this cell is highlighted */
-  highlight: PropTypes.bool,
-
-  /** handler called when the cell is clicked */
-  onClick: PropTypes.func,
+  focus: PropTypes.bool, // Whether this cell has focus
+  highlight: PropTypes.bool, // Whether this cell is highlighted
+  onClick: PropTypes.func, // Handler called when the cell is clicked
 };
 
 export type CellProps = EnhancedProps<
   typeof cellPropTypes,
   {
-    /** the data specific to this cell */
-    cellData: UsedCellData;
-    /** handler called when the cell is clicked */
-    onClick?: (cellData: UsedCellData) => void;
+    cellData: UsedCellData; // the data specific to this cell
+    onClick?: (cellData: UsedCellData) => void; // handler called when the cell is clicked
   }
 >;
 
 /**
  * An individual-letter answer cell within the crossword grid.
  *
- * A `Cell` lives inside the SVG for a
- * [`CrosswordGrid`](#/Complex%20layouts/CrosswordGrid), and renders at a
- * position determined by the `row`, `col`, and `cellSize` properties from
- * `cellData` and `renderContext`.
+ * A `Cell` lives inside the SVG for a CrosswordGrid, and renders at a position determined by the
+ * `row`, `col`, and `cellSize` properties from * `cellData` and `renderContext`.
  */
 export default function Cell({
   cellData,
@@ -52,7 +42,6 @@ export default function Cell({
   const { cellSize, cellPadding, cellInner, cellHalf, fontSize } =
     useContext(CrosswordSizeContext);
   const {
-    // gridBackground,
     cellBackground,
     cellBorder,
     textColor,
@@ -72,7 +61,6 @@ export default function Cell({
   );
 
   const { row, col, guess, number, answer } = cellData;
-
   const x = col * cellSize;
   const y = row * cellSize;
 
@@ -110,7 +98,7 @@ export default function Cell({
       )}
       <text
         x={x + cellHalf}
-        y={y + cellHalf + 1} // +1 for visual alignment?
+        y={y + cellHalf + 1}
         textAnchor="middle"
         dominantBaseline="middle"
         style={{ fill: textColor }}
@@ -131,5 +119,3 @@ Cell.defaultProps = {
   highlight: false,
   onClick: null,
 };
-
-// export default Cell;

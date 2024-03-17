@@ -63,37 +63,22 @@ export function calculateExtents(data: CluesInput, direction: Direction) {
 
   rowColMax[dir.primary] = primaryMax;
   rowColMax[dir.orthogonal] = orthogonalMax;
-
   return rowColMax;
 }
 
-// const emptyCellData: Partial<CellData> = {
-//   used: false,
-//   // number: undefined, // null,
-//   // answer: '',
-//   // guess: '',
-//   // row: r,
-//   // col: c,
-//   // across: '', //null,
-//   // down: '', //null,
-// } as const;
-
 export function createEmptyGrid(rows: number, cols: number) {
   const gridData: GridData = Array(rows);
-  // Rather than [x][y] in column-major order, the cells are indexed as
-  // [row][col] in row-major order.
+  // Rather than [x][y] in column-major order, the cells are indexed as [row][col] in row-major order
   for (let r = 0; r < rows; r++) {
     gridData[r] = Array(cols);
     for (let c = 0; c < cols; c++) {
       gridData[r][c] = {
-        // ...emptyCellData,
         row: r,
         col: c,
         used: false,
       };
     }
   }
-
   return gridData;
 }
 
@@ -112,13 +97,11 @@ export function fillClues(
       const col = colStart + (dir.primary === 'col' ? i : 0);
       const cellData = gridData[row][col] as UsedCellData;
 
-      // TODO?: check to ensure the answer is the same if it's already set?
       cellData.used = true;
       cellData.answer = answer[i];
       cellData[direction] = number;
 
       if (i === 0) {
-        // TODO?: check to ensure the number is the same if it's already set?
         cellData.number = number;
       }
     }
@@ -135,8 +118,7 @@ export function fillClues(
   clues[direction].sort(byNumber);
 }
 
-// Given the "nice format" for a crossword, generate the usable data optimized
-// for rendering and our interactivity.
+// Given the "nice format" for a crossword, generate the usable data optimized for rendering and our interactivity.
 export function createGridData(data: CluesInput, allowNonSquare?: boolean) {
   const acrossMax = calculateExtents(data, 'across');
   const downMax = calculateExtents(data, 'down');
@@ -231,8 +213,6 @@ export function loadGuesses(gridData: GuessData, storageKey: string) {
   }
 
   const saveData = JSON.parse(saveRaw);
-
-  // TODO: check date for expiration?
   deserializeGuesses(gridData, saveData.guesses);
 }
 
@@ -268,8 +248,7 @@ export function findCorrectAnswers(data: CluesInput, gridData: GuessData) {
         }
       }
       if (correct) {
-        // same args as notifyCorrect: direction, number, answer
-        correctAnswers.push([direction, num, info.answer]);
+        correctAnswers.push([direction, num, info.answer]); // same args as notifyCorrect: direction, number, answer
       }
     });
   });

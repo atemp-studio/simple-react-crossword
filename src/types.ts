@@ -1,16 +1,11 @@
 import PropTypes, { InferProps } from 'prop-types';
 
 export type OverrideProps<T, O> = Omit<T, keyof O> & O;
-
 export type EnhancedProps<T, O> = OverrideProps<InferProps<T>, O>;
-
 export type Direction = 'across' | 'down';
-
 export interface GridPosition {
-  /** The 0-indexed row for the position. */
-  row: number;
-  /** The 0-indexed column for the position. */
-  col: number;
+  row: number; // The 0-indexed row for the position.
+  col: number; // The 0-indexed column for the position.
 }
 
 // We draw a distinction between the clue "input" data (which must be provided
@@ -20,29 +15,19 @@ export interface GridPosition {
 // components), there is *potentially* more than one input format for
 // clues/answers.
 
-/**
- * Clue/answer for a single across or down clue.
- */
+// Clue/answer for a single across or down clue.
 const clueInputPropsOriginal = {
-  /** The clue to display */
-  clue: PropTypes.string.isRequired,
-  /** The answer for the clue */
-  answer: PropTypes.string.isRequired,
-  /** The 0-based row on which the answer begins */
-  row: PropTypes.number.isRequired,
-  /** The 0-based column on which the answer begins */
-  col: PropTypes.number.isRequired,
+  clue: PropTypes.string.isRequired, // The clue to display
+  answer: PropTypes.string.isRequired, // The answer for the clue
+  row: PropTypes.number.isRequired, // The 0-based row on which the answer begins
+  col: PropTypes.number.isRequired, // The 0-based column on which the answer begins
 };
 
 export const clueShapeOriginal = PropTypes.shape(clueInputPropsOriginal);
-
 export type ClueTypeOriginal = InferProps<typeof clueInputPropsOriginal>;
-
 export const cluesInputShapeOriginal = PropTypes.shape({
-  /** "across" clues and answers */
-  across: PropTypes.objectOf(clueShapeOriginal.isRequired).isRequired,
-  /** "down" clues and answers */
-  down: PropTypes.objectOf(clueShapeOriginal.isRequired).isRequired,
+  across: PropTypes.objectOf(clueShapeOriginal.isRequired).isRequired, // "across" clues and answers
+  down: PropTypes.objectOf(clueShapeOriginal.isRequired).isRequired, // "down" clues and answers
 });
 
 /**
@@ -64,40 +49,23 @@ export type CluesInput = CluesInputOriginal;
 
 // in-progress game data...
 
-/**
- * The data stored/returned for a specific cell/position in the crossword.
- */
+// The data stored/returned for a specific cell/position in the crossword.
 export type UsedCellData = GridPosition & {
-  /** Whether the position/cell is used at all. */
-  used: boolean;
-  // /** The clue related to this cell? what? Shouldn't be needed! */
-  // clue: string;
-  /** If present, a display "number" label for the cell */
-  number?: string;
-  /** The correct answer value for *only* this cell (a single letter) */
-  answer: string;
-  /** The user's guess value for *only* this cell (a single letter) */
-  guess?: string;
-  /** If present, the clue-number key for the "across" for this cell */
-  across?: string;
-  /** If present, the clue-number key for the "down" for this cell */
-  down?: string;
+  used: boolean; // Whether the position/cell is used at all.
+  number?: string; // If present, a display "number" label for the cell
+  answer: string; // The correct answer value for *only* this cell (a single letter)
+  guess?: string; // The user's guess value for *only* this cell (a single letter)
+  across?: string; // If present, the clue-number key for the "across" for this cell
+  down?: string; // If present, the clue-number key for the "down" for this cell
 };
 
-/**
- * The data stored/returned for a specific unused or out-of-bounds cell/position
- * in the crossword.
- */
+// The data stored/returned for a specific unused or out-of-bounds cell/position in the crossword.
 export type UnusedCellData = GridPosition & {
-  /** Whether the position/cell is used at all. */
-  used: false;
-  /** Whether the position/cell is completely out-of-bounds */
-  outOfBounds?: boolean;
+  used: false; // Whether the position/cell is used at all.
+  outOfBounds?: boolean; // Whether the position/cell is completely out-of-bounds
 };
 
-/**
- * The data stored/returned for a specific cell/position in the crossword.
- */
+// The data stored/returned for a specific cell/position in the crossword.
 export type CellData = UsedCellData | UnusedCellData;
 
 // export type GridData = Record<number, Record<number, CellData>>;
