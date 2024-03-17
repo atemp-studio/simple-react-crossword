@@ -1,7 +1,7 @@
 {
   "name": "@atemp-studio/simple-react-crossword",
   "homepage": "https://github.com/atemp-studio/simple-react-crossword",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple, beautiful, and opinionated crossword component for React apps",
   "author": {
     "name": "A-TEMP® Studio",
