@@ -123,8 +123,8 @@ export default function CrosswordGrid({ theme }: CrosswordGridProps) {
     [cellSize, cellPadding, cellInner, cellHalf, fontSize]
   );
 
-  const height = useMemo(() => (0.98 * rows * cellSize) + (0.02 * cellSize), [rows]);
-  const width = useMemo(() => (0.98 * cols * cellSize) + (0.02 * cellSize), [cols]);
+  const height = useMemo(() => (0.96 * rows * cellSize) + (0.04 * cellSize), [rows]);
+  const width = useMemo(() => (0.96 * cols * cellSize) + (0.04 * cellSize), [cols]);
   const cellWidthHtmlPct = useMemo(() => 100 / cols, [cols]);
   const cellHeightHtmlPct = useMemo(() => 100 / rows, [rows]);
 

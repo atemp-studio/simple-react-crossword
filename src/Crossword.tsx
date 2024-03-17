@@ -54,13 +54,17 @@ const Crossword = React.forwardRef<CrosswordImperative, CrosswordProps>(
     );
 
     return (
-      <CrosswordProvider {...props} ref={providerRef}>
-        <CrosswordGrid />
-        <div className="direction-clues">
-          <DirectionClues direction="across" label={acrossLabel} />
-          <DirectionClues direction="down" label={downLabel} />
-        </div>
-      </CrosswordProvider>
+      <section className="crossword-wrapper">
+        <CrosswordProvider {...props} ref={providerRef}>
+          <div className="crossword-grid-container">
+            <CrosswordGrid />
+          </div>
+          <div className="crossword-clues">
+            <DirectionClues direction="across" label={acrossLabel} />
+            <DirectionClues direction="down" label={downLabel} />
+          </div>
+        </CrosswordProvider>
+      </section>
     );
   }
 );

@@ -63,7 +63,7 @@ export default function Cell({
   const { row, col, guess, number, answer } = cellData;
   let x = col * cellSize;
   let y = row * cellSize;
-  const strokeWidth = cellSize / 50;
+  const strokeWidth = cellSize / 25;
   if (row !== 0) {
     y -= row * strokeWidth;
   }
@@ -94,11 +94,11 @@ export default function Cell({
       />
       {number && (
         <text
-          x={x + cellPadding * 5}
-          y={y + cellPadding * 5}
+          x={x + cellPadding * 6}
+          y={y + cellPadding * 6}
           textAnchor="start"
           dominantBaseline="hanging"
-          style={{ fontSize: '50%', fill: numberColor }}
+          style={{ fontSize: '40%', fill: numberColor }}
         >
           {number}
         </text>
