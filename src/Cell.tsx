@@ -61,8 +61,15 @@ export default function Cell({
   );
 
   const { row, col, guess, number, answer } = cellData;
-  const x = col * cellSize;
-  const y = row * cellSize;
+  let x = col * cellSize;
+  let y = row * cellSize;
+  const strokeWidth = cellSize / 50;
+  if (row !== 0) {
+    y -= row * strokeWidth;
+  }
+  if (col !== 0) {
+    x -= col * strokeWidth;
+  }
 
   return (
     <g
@@ -83,7 +90,7 @@ export default function Cell({
             : cellBackground
         }
         stroke={cellBorder}
-        strokeWidth={cellSize / 50}
+        strokeWidth={strokeWidth}
       />
       {number && (
         <text

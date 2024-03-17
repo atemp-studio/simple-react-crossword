@@ -36,22 +36,21 @@ const GridWrapper = styled.div.attrs((/* props */) => ({
 `;
 
 const CrosswordGridPropTypes = {
-  /** presentation values for the crossword; these override any values coming from a parent ThemeProvider context. */
+  // presentation values for the crossword; these override any values coming from a parent ThemeProvider context.
   theme: PropTypes.shape({
-    /** browser-width at which the clues go from showing beneath the grid to showing beside the grid */
+    // browser-width at which the clues go from showing beneath the grid to showing beside the grid
     columnBreakpoint: PropTypes.string,
-
-    /** overall background color (fill) for the crossword grid; can be `'transparent'` to show through a page background image */
+    // overall background color (fill) for the crossword grid; can be `'transparent'` to show through a page background image
     gridBackground: PropTypes.string,
-    /**  background for an answer cell */
+    //  background for an answer cell
     cellBackground: PropTypes.string,
-    /** border for an answer cell */
+    // border for an answer cell
     cellBorder: PropTypes.string,
-    /** color for answer text (entered by the player) */
+    // color for answer text (entered by the player)
     textColor: PropTypes.string,
-    /** color for the across/down numbers in the grid */
+    // color for the across/down numbers in the grid
     numberColor: PropTypes.string,
-    /** background color for the cell with focus, the one that the player is typing into */
+    // background color for the cell with focus, the one that the player is typing into
     focusBackground: PropTypes.string,
     /** background color for the cells in the answer the player is working on,
      * helps indicate in which direction focus will be moving; also used as a
@@ -62,9 +61,7 @@ const CrosswordGridPropTypes = {
 
 export type CrosswordGridProps = InferProps<typeof CrosswordGridPropTypes>;
 
-/**
- * The rendering component for the crossword grid itself.
- */
+// The rendering component for the crossword grid itself.
 export default function CrosswordGrid({ theme }: CrosswordGridProps) {
   const {
     rows,
@@ -126,8 +123,8 @@ export default function CrosswordGrid({ theme }: CrosswordGridProps) {
     [cellSize, cellPadding, cellInner, cellHalf, fontSize]
   );
 
-  const height = useMemo(() => rows * cellSize, [rows]);
-  const width = useMemo(() => cols * cellSize, [cols]);
+  const height = useMemo(() => (0.98 * rows * cellSize) + (0.02 * cellSize), [rows]);
+  const width = useMemo(() => (0.98 * cols * cellSize) + (0.02 * cellSize), [cols]);
   const cellWidthHtmlPct = useMemo(() => 100 / cols, [cols]);
   const cellHeightHtmlPct = useMemo(() => 100 / rows, [rows]);
 
